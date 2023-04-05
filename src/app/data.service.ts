@@ -19,7 +19,7 @@ export class DataService {
   role: any;
 
   constructor(private http: HttpClient) { 
-        this.url='https://myna-api.com/api/psp_router.php';
+        this.url='https://protectivesecurity.org/api/psp_router.php';
     }
 
   getLocalStorage() {
@@ -109,7 +109,7 @@ export class DataService {
       "uid": this.uid,
       "role": this.role
     }
-  this.t= this.http.post("https://myna-api.com/api/psp-menu.php", data);
+  this.t= this.http.post("https://protectivesecurity.org/api/psp-menu.php", data);
   return this.t;
 
   }
@@ -122,7 +122,7 @@ export class DataService {
       "role": this.role
     }
 
-  this.t= this.http.post("https://myna-api.com/api/u.php", data);
+  this.t= this.http.post("https://protectivesecurity.org/api/u.php", data);
   return this.t;
 
   }
@@ -134,7 +134,7 @@ export class DataService {
       "token": token
     }
 
-  this.t= this.http.post("https://myna-api.com/api/enroll.php", data);
+  this.t= this.http.post("https://protectivesecurity.org/api/enroll.php", data);
   return this.t;
 
 }

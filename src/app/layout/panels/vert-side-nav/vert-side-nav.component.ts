@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatRadioModule } from '@angular/material/radio';
-import { DataService } from '/Users/user/sql-components-site/src/app/data.service';
+import { DataService } from 'src/app/data.service';
 
 @Component({
   selector: 'app-vert-side-nav',

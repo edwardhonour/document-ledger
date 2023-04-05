@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Data, Router, RouterModule } from '@angular/router';
-import { DataService } from '/Users/user/sql-components-site/src/app/data.service';
+import { DataService } from 'src/app/data.service'; 
 import { MatRadioModule } from '@angular/material/radio'
 import { MatButtonModule } from '@angular/material/button'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
