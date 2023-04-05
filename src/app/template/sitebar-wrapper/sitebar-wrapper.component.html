@@ -1,0 +1,64 @@
+<nav *ngIf="data.name!='sign-in'&&data.isSmall!='Y'&&data.hideNav!='Y'" class="sidebar-wrapper" [style]="topStyle">
+    <div class="sidebar-brand">
+      <a href="index.html" class="logo">
+        <img src="assets/sqllabs-logo-dark.png" alt="Document Ledger" />
+      </a>
+    </div>
+    <div class="sidebar-menu">
+      <div class="sidebarMenuScroll">
+            <div class="flex-shrink-0 p-0 bg-white" [style]="innerStyle">
+                <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+                  <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+                  <span class="fs-5 fw-semibold"> &nbsp; &nbsp; Document Ledger</span>
+                </a>
+                <ul class="list-unstyled ps-0">
+                  <li class="mb-1" [style]="fontStyle">
+                    <button [routerLink]="['/sadmin']" class="btn btn-toggle align-items-center rounded" [style]="fontStyle">
+                      <i class="bi bi-house-add"></i><span class="p-3">Home</span>
+                    </button>
+                  </li>
+                  <li class="mb-1" [style]="fontStyle">
+                    <button [routerLink]="['/workspaces']" class="btn btn-toggle align-items-center rounded" [style]="fontStyle">
+                      <i class="bi bi-file-lock"></i><span class="p-3">Workspaces</span>
+                    </button>
+                  </li>
+                  <li class="mb-1" [style]="fontStyle">
+                    <button [routerLink]="['/documents']" class="btn btn-toggle align-items-center rounded" [style]="fontStyle">
+                      <i class="bi bi-file-earmark-richtext"></i><span class="p-3">Documents</span>
+                    </button>
+                  </li>
+                  <li class="mb-1" [style]="fontStyle">
+                    <button [routerLink]="['/team']" class="btn btn-toggle align-items-center rounded"  [style]="fontStyle">
+                      <i class="bi bi-file-person"></i><span class="p-3">Collaborators</span>
+                    </button>
+                  </li>
+                  <li class="mb-1" [style]="fontStyle">
+                    <button [routerLink]="['/shared']" class="btn btn-toggle align-items-center rounded"  [style]="fontStyle">
+                      <i class="bi bi-send-check"></i><span class="p-3">Share Out</span>
+                    </button>
+                  </li>
+                  <li class="mb-1" [style]="fontStyle">
+                    <button [routerLink]="['/inboxes']" class="btn btn-toggle align-items-center rounded"  [style]="fontStyle">
+                      <i class="bi bi-inboxes"></i><span class="p-3">Shared In</span>
+                    </button>
+                  </li>
+                  <li class="mb-1" [style]="fontStyle">
+                    <button [routerLink]="['/templates']" class="btn btn-toggle align-items-center rounded"  [style]="fontStyle">
+                      <i class="bi bi-gear"></i><span class="p-3">Admin</span>
+                    </button>
+                  </li>
+                  <li class="mb-1" [style]="fontStyle">
+                    <button [routerLink]="['/']" class="btn btn-toggle align-items-center rounded"  [style]="fontStyle">
+                      <i class="bi bi-gear"></i><span class="p-3">Settings</span>
+                    </button>
+                  </li>
+                  <li class="mb-1" [style]="fontStyle">
+                    <button [routerLink]="['/']" class="btn btn-toggle align-items-center rounded"  [style]="fontStyle">
+                      <span class="p-3">Logout</span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+      </div>
+    </div>    
+  </nav>

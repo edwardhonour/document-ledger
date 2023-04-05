@@ -3,6 +3,15 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { SqlComponentsModule } from 'sql-components';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxTablePaginationModule } from 'ngx-table-pagination';
+import { SitebarWrapperComponent } from './template/sitebar-wrapper/sitebar-wrapper.component';
+import { PageHeaderComponent } from './template/page-header/page-header.component';
+import { PageFooterComponent } from './template/page-footer/page-footer.component';
 
 @NgModule({
   declarations: [
@@ -10,9 +19,19 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    SqlComponentsModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxTablePaginationModule,
+    SitebarWrapperComponent,
+    PageHeaderComponent,
+    PageFooterComponent
   ],
-  providers: [],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy },
+  { provide: 'WEBSERVER', useValue: 'https://protectivesecurity.org/api/'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
