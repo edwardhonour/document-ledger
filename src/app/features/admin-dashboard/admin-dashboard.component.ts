@@ -16,7 +16,7 @@ import { DataService } from 'src/app/data.service';
   selector: 'app-admin-dashboard',
   standalone: true,
   imports: [CommonModule, VertSideNavComponent, 
-    Ng2SearchPipeModule, 
+    Ng2SearchPipeModule, RouterModule,
     NgxTablePaginationModule, MatRadioModule,
     FormsModule],
   templateUrl: './admin-dashboard.component.html',

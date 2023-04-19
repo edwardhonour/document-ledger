@@ -1,0 +1,12 @@
+<sql-add-table [title]="'All Documents for Workgroup'" [sql]="'select * from doc_document order by id desc'">
+    <th #column id="id">id</th>
+    <th #column id="create_timestamp">create_timestamp</th>
+    <th #column id="user_full_name">Uploaded By</th>
+    <th #column id="workgroup_name">Workgroup Name</th>
+    <th #column id="document_name">Document Name</th>
+    <th #column id="document_dsc">Department Description</th>
+    <th #column id="storage_key">Key</th>
+      <div form>
+            <app-doc-document-form></app-doc-document-form>
+      </div>
+</sql-add-table>

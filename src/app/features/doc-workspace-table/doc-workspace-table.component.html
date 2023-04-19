@@ -1,0 +1,14 @@
+<sql-add-table [title]="'Workspaces'" [sql]="'select * from doc_workspace'">
+    <th #column id="id">id</th>
+    <th #column id="create_timestamp">Timestamp</th>
+    <th #column id="user_full_name">Created By</th>
+    <th #column id="workgroup_name">Workgroup</th>
+    <th #column id="workspace_name">Workspace</th>
+    <th #column id="workspace_dsc">Description</th>
+    <th #column id="doc_count">Documents</th>
+    <th #column id="user_count">Collaborators</th>
+    <th #column id="share_count">Shares</th>
+      <div form>
+            <app-doc-workspace-form></app-doc-workspace-form>
+      </div>
+</sql-add-table>

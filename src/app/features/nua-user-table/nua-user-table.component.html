@@ -1,0 +1,14 @@
+<sql-add-table [title]="'Workspace Collaborators'" [sql]="'select * from nua_user order by id'">
+    <th #column id="id">id</th>
+    <th #column id="full_name">full_name</th>
+    <th #column id="email">email</th>
+    <th #column id="phone_mobile">phone_mobile</th>
+    <th #column id="status">status</th>
+    <th #column id="login_code">login_code</th>
+    <th #column id="company_name">company_name</th>
+    <th #column id="work_phone">work_phone</th>
+    <th #column id="workgroup_name">workgroup_id</th>
+      <div form>
+            <app-nua-user-form></app-nua-user-form>
+      </div>
+</sql-add-table>
