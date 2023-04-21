@@ -68,9 +68,10 @@ export class NewSigninComponent implements OnInit {
   ngOnInit(): void
   {
       if (localStorage.getItem('uid')===null) {
-
+        this._router.navigateByUrl('/'); 
+          localStorage.setItem('uid','567');
       } else {
-        this._router.navigateByUrl('/sadmin'); 
+        this._router.navigateByUrl('/'); 
       }
   }
 
