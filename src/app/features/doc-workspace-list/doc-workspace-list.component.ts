@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { SqlComponentsModule } from 'sql-components';
 import { DocWorkspaceFormComponent } from '../doc-workspace-form/doc-workspace-form.component';
 
@@ -8,7 +8,7 @@ import { DocWorkspaceFormComponent } from '../doc-workspace-form/doc-workspace-f
 @Component({
   selector: 'app-doc-workspace-table',
   standalone: true,
-  imports: [CommonModule, SqlComponentsModule, DocWorkspaceFormComponent], 
+  imports: [CommonModule, SqlComponentsModule, DocWorkspaceFormComponent, RouterModule], 
   templateUrl: './doc-workspace-list.component.html',
   styleUrls: ['./doc-workspace-list.component.css']
 })

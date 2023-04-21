@@ -152,7 +152,7 @@ postTemplate(file_data:any) {
 })
 export class FileUploadService {
   // API url
-  baseApiUrl = 'https://protectivesecurity.org/test.php';  // replace with URL of your post
+  baseApiUrl = 'https://protectivesecurity.org/up.php';  // replace with URL of your post
 
   constructor(private http: HttpClient) {}
 

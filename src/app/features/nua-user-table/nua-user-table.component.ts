@@ -2,11 +2,12 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SqlComponentsModule } from 'sql-components';
 import { NuaUserFormComponent } from '../nua-user-form/nua-user-form.component'; 
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-nua-user-table',
   standalone: true,
-  imports: [CommonModule, SqlComponentsModule, NuaUserFormComponent], 
+  imports: [CommonModule, SqlComponentsModule, NuaUserFormComponent, RouterModule], 
   templateUrl: './nua-user-table.component.html',
   styleUrls: ['./nua-user-table.component.css']
 })

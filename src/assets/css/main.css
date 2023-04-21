@@ -568,12 +568,13 @@ img {
 
 /************* 6.2 Sidebar Wrapper *************/
 .sidebar-wrapper {
-  width: 280px;
+  width: 100%; 
   padding: 0;
   height: calc(100vh - 20px);
   border-radius: 10px 90px 90px 10px;
+/*  background: #ffffff; */
   background: #ffffff;
-  position: fixed;
+/*  position: fixed; */
   top: 10px;
   left: 20px;
   z-index: 999;

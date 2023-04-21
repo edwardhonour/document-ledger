@@ -15,12 +15,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { AddDocumentFormComponent } from 'src/app/components/add-document-form/add-document-form.component';
+import { SqlUploadComponent } from 'src/app/components/sql-upload/sql-upload.component';
+import { SmartUploadComponent } from 'src/app/components/smart-upload/smart-upload.component';
+import { SitebarWrapperComponent } from 'src/app/template/sitebar-wrapper/sitebar-wrapper.component';
 
 @Component({
   selector: 'app-project-dashboard',
   standalone: true,
-  imports: [CommonModule, Ng2SearchPipeModule, MatRadioModule, NgxTablePaginationModule, RouterModule, FormsModule,  
-    SqlComponentsModule, SqlMenuComponent, FileUploadModule, HttpClientModule],
+  imports: [CommonModule, Ng2SearchPipeModule, MatRadioModule, NgxTablePaginationModule, RouterModule, FormsModule, SqlUploadComponent, SmartUploadComponent,
+    SqlComponentsModule, SqlMenuComponent, FileUploadModule, HttpClientModule, AddDocumentFormComponent, SitebarWrapperComponent],
   templateUrl: './project-dashboard.component.html',
   styleUrls: ['./project-dashboard.component.css']
 })
@@ -64,6 +68,8 @@ export class ProjectDashboardComponent {
   uploadedList: any = '';
   public fileUploadControl = new FileUploadControl();
   progress: number = 0;
+  uid: any = 0;
+  doc_id: any = 0;
 
   ngOnInit(): void {      
           this._activatedRoute.data.subscribe(({ 
@@ -75,6 +81,7 @@ export class ProjectDashboardComponent {
 
             } else {
               this.uploading='N'
+              this.uid=localStorage.getItem('uid');
             }
           }) 
   }
@@ -84,6 +91,7 @@ export class ProjectDashboardComponent {
       this.uploading='N';
     } else {
       this.uploading='Y';
+      this.adding='N';
     }
   }
 
@@ -92,11 +100,13 @@ export class ProjectDashboardComponent {
       this.adding='N';
     } else {
       this.adding='Y';
+      this.uploading='N';
     }
   }
 
   toggleVersion(m: any) {
     this.k=m;
+    this.doc_id=m.id;
     if (this.version=='Y') {
       this.version='N';
     } else {

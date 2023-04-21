@@ -4,16 +4,19 @@
             <app-page-header></app-page-header>
         </div>
     </div>
-    <div class="row">
+<!--   <div class="row">
         <div *ngIf="data.hideNav=='N'" class="d-none d-sm-none d-lg-none d-xl-block" [style]="leftStyle">
-            <app-sitebar-wrapper></app-sitebar-wrapper>
+                <app-sitebar-wrapper></app-sitebar-wrapper>
         </div>
         <div [style]="contentStyle">
-           <!-- <div class="content-wrapper-scroll"> -->
                 <router-outlet></router-outlet>
-            <app-page-footer></app-page-footer> 
-        <!-- </div> -->
+                 <app-page-footer></app-page-footer> 
+        </div>
+</div> -->
+<div class="row">
+    <div class="col-12">
+        <router-outlet></router-outlet>
+        <app-page-footer></app-page-footer> 
     </div>
-    <div>
-    </div>
+</div>
 </div>

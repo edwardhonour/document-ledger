@@ -2,12 +2,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SqlComponentsModule } from 'sql-components';
 import { DocDocumentFormComponent } from '../doc-document-form/doc-document-form.component'; 
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-doc-document-table',
   standalone: true,
-  imports: [CommonModule, SqlComponentsModule, DocDocumentFormComponent], 
+  imports: [CommonModule, SqlComponentsModule, DocDocumentFormComponent, RouterModule], 
   templateUrl: './doc-document-table.component.html',
   styleUrls: ['./doc-document-table.component.css']
 })
