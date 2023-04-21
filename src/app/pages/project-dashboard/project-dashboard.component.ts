@@ -1,37 +1,69 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output, EventEmitter, HostBindingDecorator, HostListener, HostBinding } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { FormsModule,  FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
-import { DataService } from 'src/app/data.service';
+import { DataService, FileUploadService } from 'src/app/data.service';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxTablePaginationModule } from 'ngx-table-pagination';
 import { MatRadioModule } from '@angular/material/radio';
 import { SqlComponentsModule, SqlMenuComponent } from 'sql-components';
+import { FileUploadModule, FileUploadControl, FileUploadValidators } from '@iplab/ngx-file-upload';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-project-dashboard',
   standalone: true,
-  imports: [CommonModule, Ng2SearchPipeModule, MatRadioModule, NgxTablePaginationModule, RouterModule, SqlComponentsModule, SqlMenuComponent],
+  imports: [CommonModule, Ng2SearchPipeModule, MatRadioModule, NgxTablePaginationModule, RouterModule, FormsModule,  
+    SqlComponentsModule, SqlMenuComponent, FileUploadModule, HttpClientModule],
   templateUrl: './project-dashboard.component.html',
   styleUrls: ['./project-dashboard.component.css']
 })
 export class ProjectDashboardComponent {
 
+  @Output() onFileDropped = new EventEmitter<any>();
+
+  @HostListener('dragover', ['$event']) onDragOver(evt: any) {
+    evt.preventDefault();
+    evt.stopPropagation();
+  }
+  //Dragleave listener, when something is dragged away from our host element
+  @HostListener('dragleave', ['$event']) public onDragLeave(evt: any) {
+    evt.preventDefault();
+    evt.stopPropagation();
+  }
+
+  @HostListener('drop', ['$event']) public ondrop(evt: any) {
+//    evt.preventDefault();
+//    evt.stopPropagation();
+//    let files = evt.dataTransfer.files;
+//    if (files.length > 0) {
+//      this.onFileDropped.emit(files)
+//    }
+  this.uploadFiles();
+  }
+
   constructor(
     private _activatedRoute: ActivatedRoute,
-    private _router: Router,
+    private _router: Router, 
     private _dataService: DataService,
-    public http: HttpClient  // used by upload
+    public http: HttpClient,
+    private fileUploadService: FileUploadService
 ) { }
-
+  public uploadedFiles: Array<File> = [];
   data: any; 
   uploading: any = 'N';
   adding: any = 'N';
   version: any = 'N';
   k: any;
+  uploadedList: any = '';
+  public fileUploadControl = new FileUploadControl();
+  progress: number = 0;
 
   ngOnInit(): void {      
           this._activatedRoute.data.subscribe(({ 
@@ -83,5 +115,45 @@ export class ProjectDashboardComponent {
    //--   this._unsubscribeAll.complete();
   }
 
+
+uploadFiles() {
+  for (const droppedFile of this.uploadedFiles) {
+    console.log(droppedFile.name);
+    console.log(droppedFile.size);
+    console.log(droppedFile.type);
+    let postData= {
+      one: 'one',
+      two: 'two'
+    }
+    this.fileUploadService.upload(droppedFile, postData).subscribe((event: HttpEvent<any>) => {
+    switch (event.type) {
+      case HttpEventType.Sent:
+        console.log('Request has been made!');
+        break;
+      case HttpEventType.ResponseHeader:
+        console.log('Response header has been received!');
+        break;
+      case HttpEventType.UploadProgress:
+        this.progress = Math.round(event.loaded / event.total! * 100);
+        console.log('Uploaded! ' + this.progress);
+        break;
+      case HttpEventType.Response:
+        console.log('User successfully created!', event.body);
+        setTimeout(() => {
+          this.progress = 0;
+          this.uploadedList+=droppedFile.name;
+        }, 1500);
+    }
+  })
+}
+}
+
+drop() {
+  alert('dropped')
+}
+
+public clear(): void {
+  this.uploadedFiles = [];
+}
 
 }

@@ -146,3 +146,29 @@ postTemplate(file_data:any) {
 }
 
 }
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FileUploadService {
+  // API url
+  baseApiUrl = 'https://protectivesecurity.org/test.php';  // replace with URL of your post
+
+  constructor(private http: HttpClient) {}
+
+  upload(file:File, postData: any): Observable<any> {
+
+    const formData = new FormData();
+
+    formData.append('file', file, file.name);
+    let k: keyof typeof postData;  
+    for (k in postData) {
+      formData.append(k,postData[k]);
+    }
+
+    return this.http.post(this.baseApiUrl, formData, { 
+      reportProgress: true,
+      observe: 'events',
+    });
+  }
+}

@@ -67,81 +67,11 @@ export class NewSigninComponent implements OnInit {
    */
   ngOnInit(): void
   {
-      //----------------------------------------------------------------
-      // CHANGE THIS VARIABLE TO 'Y' WHEN MOVING TO PRODUCION 
-      // CHANGE THIS VARIABLE TO 'N' WHEN IN DEVELOPMENT AND TESTING
-      //----------------------------------------------------------------
-      let screenHeight = window.innerHeight;
-      this.style="background-image: url('assets/images/bg.jpg'); background-size: cover; background-color:blue; min-height: "+screenHeight+".px";
-      let d = { name: 'sign-in', link: '/sign_in', count: 0, isSmall: 'N', hideNav: 'Y'};
-      this._dataService.locationSubject.next(d);
-      let production='N'
-      if (production=='Y') {
-        localStorage.removeItem('uid')
-        localStorage.removeItem('role')
-        location.replace('https://protectivesecurity.org/#/sign-in')
+      if (localStorage.getItem('uid')===null) {
+
       } else {
-
-        this.signInForm = this._formBuilder.group({
-          email     : ['', [Validators.required]],
-          password  : ['', Validators.required],
-          rememberMe: ['']
-      });
-      localStorage.removeItem('uid');
-//     if (localStorage.getItem('uid')!==undefined) {
-//      if (localStorage.getItem('uid')!==null) {
-       //-- Super Admin
-//      if (localStorage.getItem('role')=="sadmin") { 
-//          this._router.navigateByUrl('/sadmin'); 
-//          location.replace('/#/sadmin');
-//        }
-//      }
-//     }
-    }
-
+        this._router.navigateByUrl('/sadmin'); 
+      }
   }
 
-  // -----------------------------------------------------------------------------------------------------
-  // @ Public methods
-  // -----------------------------------------------------------------------------------------------------
-
-  /**
-   * Sign in
-   */
-   signIn(): void
-   {
-       if ( this.signInForm.invalid )
-       {
-           return;
-       }
-
-       this.signInForm = this._formBuilder.group({
-          email     : ['', [Validators.required, Validators.email]],
-          password  : ['', Validators.required],
-          rememberMe: ['']
-      });
-
-       this.signInForm.disable();
-       this.showAlert = false;
-   }
-                      
-            setUID(): void {
-              localStorage.setItem('uid','999')
-              this._router.navigate(['/active-claims'])
-          }
-          
-  postForm() {
-  
-            this._dataService.postLogin(this.email, this.password).subscribe((data:any)=>{
-              if (data?.user.error_code=="0") {
-                localStorage.setItem('uid',data.user.uid)
-                localStorage.setItem('role',data.user.role)
-                this.signIn()
-                this._router.navigateByUrl('/sadmin'); 
-              } else {      
-                  alert('invalid email or password')
-              }
-            });
-  }
-          
 }
