@@ -80,12 +80,17 @@ export class SmartUploadComponent {
     }
   
     this.fileUploadService.upload(droppedFile, postData).subscribe((event: HttpEvent<any>) => {
-    switch (event.type) {
+      console.log(event.type)
+      switch (event.type) {
       case HttpEventType.Sent:
         console.log('Request has been made!');
         break;
       case HttpEventType.ResponseHeader:
         console.log('Response header has been received!');
+        setTimeout(() => {
+          this.progress = 0;
+          location.reload();
+        }, 1500);
         break;
       case HttpEventType.UploadProgress:
         this.progress = Math.round(event.loaded / event.total! * 100);

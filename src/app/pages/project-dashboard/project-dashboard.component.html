@@ -1,97 +1,36 @@
 <div class="row">
-    <div class="col-lg-4 col-xl-3 col-xxl-2 card" style="border-radius: 10px 90px 90px 10px;">
-        <nav *ngIf="data.name!='sign-in'&&data.isSmall!='Y'&&data.hideNav!='Y'" class="sidebar-wrapper">
-            <div class="sidebar-brand">
-              <a href="index.html" class="logo">
-                <img src="assets/sqllabs-logo-dark.png" alt="Document Ledger" />
-              </a>
-            </div>
-            <div class="sidebar-menu">
-              <div class="sidebarMenuScroll">
-                    <div class="flex-shrink-0 p-0 bg-white">
-                        <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-                          <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-                          <span class="fs-5 fw-semibold"> &nbsp; &nbsp; Document Ledger</span>
-                        </a>
-                        <ul class="list-unstyled ps-0">
-                          <li class="mb-1">
-                            <button [routerLink]="['/sadmin']" class="btn align-items-center rounded">
-                              <i class="bi bi-house-add"></i><span class="p-3">Home</span>
-                            </button>
-                          </li>
-                          <li class="mb-1">
-                            <button [routerLink]="['/workspaces']" class="btn align-items-center rounded">
-                              <i class="bi bi-file-lock"></i><span class="p-3">Workspaces</span>
-                            </button>
-                          </li>
-                          <li class="mb-1">
-                            <button [routerLink]="['/documents']" class="btn btn-toggle align-items-center rounded">
-                              <i class="bi bi-file-earmark-richtext"></i><span class="p-3">Documents</span>
-                            </button>
-                          </li>
-                          <li class="mb-1">
-                            <button [routerLink]="['/team']" class="btn btn-toggle align-items-center rounded">
-                              <i class="bi bi-file-person"></i><span class="p-3">Collaborators</span>
-                            </button>
-                          </li>
-                          <li class="mb-1">
-                            <button [routerLink]="['/shared']" class="btn btn-toggle align-items-center rounded">
-                              <i class="bi bi-send-check"></i><span class="p-3">Share Out</span>
-                            </button>
-                          </li>
-                          <li class="mb-1">
-                            <button [routerLink]="['/inboxes']" class="btn btn-toggle align-items-center rounded">
-                              <i class="bi bi-inboxes"></i><span class="p-3">Shared In</span>
-                            </button>
-                          </li>
-                          <li class="mb-1">
-                            <button [routerLink]="['/templates']" class="btn btn-toggle align-items-center rounded">
-                              <i class="bi bi-gear"></i><span class="p-3">Admin</span>
-                            </button>
-                          </li>
-                          <li class="mb-1">
-                            <button [routerLink]="['/']" class="btn btn-toggle align-items-center rounded">
-                              <i class="bi bi-gear"></i><span class="p-3">Settings</span>
-                            </button>
-                          </li>
-                          <li class="mb-1">
-                            <button [routerLink]="['/']" class="btn btn-toggle align-items-center rounded">
-                              <span class="p-3">Logout</span>
-                            </button>
-                          </li>
-                        </ul>
-                      </div>
-              </div>
-            </div>    
-          </nav>        
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
     </div>
 <div class="col-lg-8 col-xl-9 col-xxl-10">
-<div class="card">
+<div style="margin-left: 30px; " class="card">
     <div class="container-fluid p-3">
         <div class="row card card-body m-3">
             <div class="col-sm-5" style="background-color: white;">
-                <h1 class="mt-2">{{ data?.formData?.workspace_name }}</h1>
+                <h1 class="mt-2"><span style="text-align: right; margin-right: 30px;"> <button [routerLink]="['/workspaces']" class="btn btn-secondary"><i class="bi bi-arrow-bar-left"></i></button></span>{{ data?.formData?.workspace_name }}</h1>
                 <p>{{ data?.formData?.workspace_dsc }}<br>
                 {{ data?.formData?.storage_key }}<br>
-            </div>     
+            </div>   
+
         </div>
         <div class="row p-3">
             <div class="col-3">
                 <div class="card card-body">
                     <h2>Main Menu</h2>
-                    <sql-menu (menuClick)="processClick($event);" [active]="'FD'">
-                        <li #row id="EDIT">Edit Workspace</li>
-                        <li #row id="UPLOAD">Upload Document</li>
-                        <li #row id="UPLOAD">Upload New Document Version</li>                    
+                    <sql-menu (menuClick)="processClick($event);" [active]="'DOCUMENTS'">
+                        <li #row id="DOCUMENTS">Documents</li> 
+                        <li #row id="MANAGE">Manage Workspace</li>
+                        <li #row id="ADD">New Document</li>
+                        <li #row id="UPLOAD">Smart Upload</li>                    
                         <li #row id="SHARE">Share Workspace</li>
-                        <li #row id="EMAIL">Share Via Email</li>
                         <li #row id="HIDE">Hide (Delete Workspace)</li>                         
                </sql-menu>
                 </div>
                 <div class="card card-body">
                     <sql-menu (menuClick)="processClick($event);">
-                        <li #row id="TEAM">Add Team Member</li>                    
-                        <li #row id="TEAM">Add Collaborator</li>                      
+                        <li #row id="TEAM">Invite Team Member</li>                    
+                        <li #row id="TEAM">Invite Collaborator</li>      
+                        <li #row id="TEAM">Invite Stakeholder</li>                      
                </sql-menu>
                 </div>
             </div>
@@ -119,17 +58,17 @@
                                 <th>Timestamp</th>
                                 <th>Document Name</th>
                                 <th>Document Type</th>
-                                <th>Last File Name</th>
                                 <th>Version</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr (click)="toggleVersion(m);" *ngFor="let m of data.documents">
-                                <td>{{ m.create_timestamp }}</td>
-                                <td>{{ m.document_name }}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                            <tr *ngFor="let m of data.documents">
+                                <td (click)="toggleVersion(m);">{{ m.create_timestamp }}</td>
+                                <td (click)="toggleVersion(m);">{{ m.document_name }}</td>
+                                <td (click)="toggleVersion(m);">{{ m.extension }}</td>
+                                <td (click)="toggleVersion(m);">{{ m.version }}</td>
+                                <td><button [routerLink]="['/document-dashboard',m.storage_key]" class="btn btn-primary"><i class="bi bi-clipboard-data"></i></button></td>
                             </tr>
                         </tbody>
                     </table>

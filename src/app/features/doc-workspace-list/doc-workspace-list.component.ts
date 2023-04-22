@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { SqlComponentsModule } from 'sql-components';
 import { DocWorkspaceFormComponent } from '../doc-workspace-form/doc-workspace-form.component';
+import { SitebarWrapperComponent } from 'src/app/template/sitebar-wrapper/sitebar-wrapper.component';
 
 
 @Component({
   selector: 'app-doc-workspace-table',
   standalone: true,
-  imports: [CommonModule, SqlComponentsModule, DocWorkspaceFormComponent, RouterModule], 
+  imports: [CommonModule, SqlComponentsModule, DocWorkspaceFormComponent, RouterModule, SitebarWrapperComponent], 
   templateUrl: './doc-workspace-list.component.html',
   styleUrls: ['./doc-workspace-list.component.css']
 })

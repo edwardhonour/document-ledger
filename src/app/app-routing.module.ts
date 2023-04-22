@@ -17,6 +17,8 @@ import { DocDocumentTableComponent } from './pages/doc-document-table/doc-docume
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { ProjectDashboardComponent } from './pages/project-dashboard/project-dashboard.component';
 import { TestPageComponent } from './pages/test-page/test-page.component';
+import { DocumentDashboardComponent } from './features/document-dashboard/document-dashboard.component';
+import { AdminHomeComponent } from './features/admin-home/admin-home.component';
 
 const routes: Routes = [
   { path: '', component: NewSigninComponent },
@@ -24,7 +26,9 @@ const routes: Routes = [
   { path: 'workspaces', component: DocWorkspaceListComponent },
   { path: 'documents', component: DocDocumentTableComponent },
   { path: 'workspace-dashboard/:id', component: ProjectDashboardComponent, resolve: { data: DataResolver }  },
+  { path: 'document-dashboard/:id', component: DocumentDashboardComponent, resolve: { data: DataResolver }  },
   { path: 'team', component: NuaUserTableComponent },
+  { path: 'admin', component: AdminHomeComponent },
   { path: 'test/:id', component: TestPageComponent, resolve: { parameters: RouteParameterResolver } },
   { path: 'test/:id/:id2', component: TestPageComponent, resolve: { parameters: RouteParameterResolver } },
   { path: 'test/:id/:id2/:id3', component: TestPageComponent, resolve: { parameters: RouteParameterResolver } },    

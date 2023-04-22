@@ -13,17 +13,18 @@ import { VertSideNavComponent } from 'src/app/layout/panels/vert-side-nav/vert-s
 import { DataService } from 'src/app/data.service';
 import { SitebarWrapperComponent } from 'src/app/template/sitebar-wrapper/sitebar-wrapper.component';
 
+
 @Component({
-  selector: 'app-admin-dashboard',
+  selector: 'app-admin-home',
   standalone: true,
   imports: [CommonModule, VertSideNavComponent, 
     Ng2SearchPipeModule, RouterModule, SitebarWrapperComponent,
     NgxTablePaginationModule, MatRadioModule,
     FormsModule],
-  templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.css']
+  templateUrl: './admin-home.component.html',
+  styleUrls: ['./admin-home.component.css']
 })
-export class AdminDashboardComponent implements OnInit, OnDestroy
+export class AdminHomeComponent implements OnInit, OnDestroy
 {
   isScreenSmall: boolean = false;
   term: any;
