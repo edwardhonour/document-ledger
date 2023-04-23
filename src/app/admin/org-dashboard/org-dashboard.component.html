@@ -1,0 +1,197 @@
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
+    </div>
+<div class="col-lg-8 col-xl-9 col-xxl-10">
+<div style="margin-left: 30px; " class="card">
+    <div class="container-fluid p-3">
+        <div class="row card card-body m-3">
+            <div class="col-sm-12" style="background-color: white;">
+                <h1 class="mt-2"><span style="text-align: right; margin-right: 30px;"> <button [routerLink]="['/workspaces']" class="btn btn-secondary"><i class="bi bi-arrow-bar-left"></i></button></span>{{ data?.formData?.org_name }}</h1>
+                <p>{{ data?.formData?.contact_name }}<br>
+            </div>   
+
+        </div>
+        <div class="row p-3">
+            <div class="col-3">
+                <div class="card card-body">
+                    <h2>Main Menu</h2>
+                    <sql-menu (menuClick)="processClick($event);" [active]="'DOCUMENTS'">
+                        <li #row id="WORKSPACE">Create Workspace</li>
+                        <li #row id="TEAM">Invite Team Member</li>                    
+                        <li #row id="TEAM">Invite Collaborator</li>      
+                        <li #row id="TEAM">Invite Stakeholder</li>                      
+               </sql-menu>
+                </div>
+            </div>
+    
+            <div class="col-sm-9">
+                <div *ngIf="adding=='Y'" class="card p-3">
+                    <app-doc-workspace-form (cancel)="toggleAdd()"></app-doc-workspace-form>
+                </div>
+                <div class="card p-3">
+                    <div class="row">
+                        <div class="col-9">
+                            <h2>Workspaces</h2>
+                        </div>
+                        <div class="col-3"  style="text-align: right;">
+                        </div>
+                    </div>
+                    
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Workspace Name</th>
+                                <th>Documents</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let m of data.workspaces">
+                                <td (click)="toggleVersion(m);">{{ m.create_timestamp }}</td>
+                                <td (click)="toggleVersion(m);">{{ m.workspace_name }}</td>
+                                <td (click)="toggleVersion(m);">{{ m.doc_count }}</td>
+                                <td><button [routerLink]="['/workspace-dashboard',m.id]" class="btn btn-primary"><i class="bi bi-clipboard-data"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row p-2">
+                        <div class="col-6">
+                        </div>
+                        <div class="col-6" style="text-align: right;">
+                            <button (click)="toggleAdd();" class="btn btn-secondary">Add Workspace</button>
+                        </div>
+                    </div>  
+                </div>
+                <div *ngIf="inviteT=='Y'" class="card p-3">
+                    <h2>Invite Team Member</h2>
+                    <p>Your team member will receive an email inviting them to join your team. You can enter a custom message that will be included in the invitation email.</p>
+                    <div class="mb-3">
+                        <label for="email" class="form-label" style="color:black">Email address</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1">
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label"  style="color:black">Custom Message (optional)</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label"  style="color:black">Default Role for Workspaces</label>
+                        <select class="form-select" aria-label="Default select example">
+                           <option value="0" selected>-- Select --</option>
+                            <option value="0">Read-Only</option>
+                            <option value="2">Read-Write</option>
+                            <option value="3">Full Control</option>
+                            <option value="5">Upload Only</option>
+                            <option value="7">Admin</option>
+                        </select>         
+                      </div>  
+                      <div class="mb-3">
+                            <button class="btn btn-primary" (click)="inviteT()">Send Invitation</button>
+                      </div>             
+                </div>
+                <div class="card p-3">
+                    <div class="row">
+                        <div class="col-9">
+                            <h2>Team Members</h2>
+                        </div>
+                        <div class="col-3"  style="text-align: right;">
+                        </div>
+                    </div>
+                    
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Full Name</th>
+                                <th>Default Role</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let m of data.workspaces">
+                                <td (click)="toggleVersion(m);">{{ m.create_timestamp }}</td>
+                                <td (click)="toggleVersion(m);">{{ m.workspace_name }}</td>
+                                <td (click)="toggleVersion(m);">{{ m.doc_count }}</td>
+                                <td><button [routerLink]="['/workspace-dashboard',m.id]" class="btn btn-primary"><i class="bi bi-clipboard-data"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row p-2">
+                        <div class="col-6">
+                        </div>
+                        <div class="col-6" style="text-align: right;">
+                            <button (click)="toggleInviteT();" class="btn btn-secondary">Invite Team Member</button>
+                        </div>
+                    </div>  
+                </div>
+                <div class="card p-3">
+                    <div class="row">
+                        <div class="col-9">
+                            <h2>Project Collaborators</h2>
+                        </div>
+                        <div class="col-3"  style="text-align: right;">
+                        </div>
+                    </div>
+                    
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Full Name</th>
+                                <th>Default Role</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let m of data.workspaces">
+                                <td (click)="toggleVersion(m);">{{ m.create_timestamp }}</td>
+                                <td (click)="toggleVersion(m);">{{ m.workspace_name }}</td>
+                                <td (click)="toggleVersion(m);">{{ m.doc_count }}</td>
+                                <td><button [routerLink]="['/workspace-dashboard',m.id]" class="btn btn-primary"><i class="bi bi-clipboard-data"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row p-2">
+                        <div class="col-6">
+                        </div>
+                        <div class="col-6" style="text-align: right;">
+                            <button (click)="toggleAdd();" class="btn btn-secondary">Invite Project Collaborators</button>
+                        </div>
+                    </div>  
+                </div>
+                <div *ngIf="version=='Y'" class="card p-3">
+                    <hr/>
+                    <app-sql-upload [document_id]="doc_id" [workspace_id]="data.formData.id"></app-sql-upload>
+                    <h2>Version History</h2>
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Document Name</th>
+                                <th>Document Type</th>
+                                <th>Uploaded By</th>
+                                <th>Version</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>{{ k.create_timestamp }}</th>
+                                <th>{{ k.document_name }}</th>
+                                <th>.png</th>
+                                <th>Jason Scarpetta</th>
+                                <th>1</th>
+                            </tr>
+                        </tbody>
+                    </table> 
+                </div>
+            </div>
+        </div>   
+    </div>
+        
+    </div>    
+    <div class="relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
+            <span class="font-medium text-secondary">SQLLabs Inc. &copy; 2023</span>
+    </div>
+    </div>
+    

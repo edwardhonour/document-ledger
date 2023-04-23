@@ -19,14 +19,18 @@ import { ProjectDashboardComponent } from './pages/project-dashboard/project-das
 import { TestPageComponent } from './pages/test-page/test-page.component';
 import { DocumentDashboardComponent } from './features/document-dashboard/document-dashboard.component';
 import { AdminHomeComponent } from './features/admin-home/admin-home.component';
+import { OrgListComponent } from './admin/org-list/org-list.component';
+import { OrgDashboardComponent } from './admin/org-dashboard/org-dashboard.component';
 
 const routes: Routes = [
   { path: '', component: NewSigninComponent },
   { path: 'workspace-table', component: DocWorkspaceTableComponent },
   { path: 'workspaces', component: DocWorkspaceListComponent },
+  { path: 'orgs', component: OrgListComponent },
   { path: 'documents', component: DocDocumentTableComponent },
   { path: 'workspace-dashboard/:id', component: ProjectDashboardComponent, resolve: { data: DataResolver }  },
   { path: 'document-dashboard/:id', component: DocumentDashboardComponent, resolve: { data: DataResolver }  },
+  { path: 'org-dashboard/:id', component: OrgDashboardComponent, resolve: { data: DataResolver }  },
   { path: 'team', component: NuaUserTableComponent },
   { path: 'admin', component: AdminHomeComponent },
   { path: 'test/:id', component: TestPageComponent, resolve: { parameters: RouteParameterResolver } },
