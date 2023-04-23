@@ -84,6 +84,9 @@ for (const droppedFile of this.uploadedFiles) {
       break;
     case HttpEventType.ResponseHeader:
       console.log('Response header has been received!');
+      setTimeout(() => {
+location.reload();
+      }, 500);
       break;
     case HttpEventType.UploadProgress:
       this.progress = Math.round(event.loaded / event.total! * 100);

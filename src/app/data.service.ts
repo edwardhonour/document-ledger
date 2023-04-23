@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpClientModule, HttpHeaders, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { HttpClient, HttpClientModule, HttpHeaders, HttpParams, HttpEventType } from '@angular/common/http';
+import { BehaviorSubject, Observable, of, map, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -152,8 +152,11 @@ postTemplate(file_data:any) {
 })
 export class FileUploadService {
   // API url
-  baseApiUrl = 'https://protectivesecurity.org/up.php';  // replace with URL of your post
+  baseApiUrl = 'https://protectivesecurity.org/up.php';  
+  baseVerifyUrl = 'https://protectivesecurity.org/verify.php';  
+  public valid: any = {};
 
+  uid: any = 0;
   constructor(private http: HttpClient) {}
 
   upload(file:File, postData: any): Observable<any> {
@@ -171,4 +174,31 @@ export class FileUploadService {
       observe: 'events',
     });
   }
+
+  upload_verify(file:File, postData: any): Observable<any> {
+
+
+    const formData = new FormData();
+
+    if (localStorage.getItem('uid')===null) {
+      this.uid="0";
+    } else {
+      this.uid=localStorage.getItem('uid')
+    }
+
+    formData.append('file', file, file.name);
+    formData.append('uid', this.uid);    
+    let k: keyof typeof postData;  
+    for (k in postData) {
+      formData.append(k,postData[k]);
+    }
+
+    return this.http.post(this.baseVerifyUrl, formData, { 
+      reportProgress: true,
+      observe: 'events',
+    })
+    
+  }
+
+
 }

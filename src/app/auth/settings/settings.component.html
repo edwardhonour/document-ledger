@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2 card">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
+    </div>
+<div class="col-lg-8 col-xl-9 col-xxl-10">
+<div style="margin-left: 30px; " class="card">
+    <div class="container-fluid p-3">
+        <div class="row card card-body m-3">
+            <div class="col-sm-5" style="background-color: white;">
+                <h1 class="mt-2">User: {{ data?.formData?.full_name }}</h1>
+            </div>     
+        </div>
+        <div class="row card card-body m-3">
+            <div class="col-sm-5" style="background-color: white;">
+                <h1 class="mt-2">Organization: {{ data?.orgData?.org_name }}</h1>
+                <p>{{ data?.formData?.document_dsc }}<br>
+            </div>     
+        </div>        
+        <div class="row p-3">
+            <div class="col-3">
+                <div class="card card-body">
+                    <h2>Main Menu</h2>
+                    <sql-menu (menuClick)="processClick($event);" [active]="'FD'">
+                        <li #row id="INVITE">Edit Personal Info</li>
+                        <li #row id="UPLOAD">Edit Organization Info</li>                                      
+               </sql-menu>
+                </div>
+                <div class="card card-body">
+                    <sql-menu (menuClick)="processClick($event);">
+                        <li #row id="TEAM">Invite Team Member</li>                                   
+               </sql-menu>
+                </div>
+            </div>
+    
+            <div class="col-sm-9">
+                <div *ngIf="uploading=='Y'" class="card p-3">
+                    <app-sql-upload [workspace_id]="data?.workspace?.id" document_id="data?.formData.id" (cancel)="toggleAdd()"></app-sql-upload>
+                </div>            
+                <div class="card p-3">
+
+                </div>
+            </div>
+        </div>   
+    </div>
+        
+    </div>    
+    <div class="relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
+            <span class="font-medium text-secondary">SQLLabs Inc. &copy; 2023</span>
+    </div>
+    </div>
+    

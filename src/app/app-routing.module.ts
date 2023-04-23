@@ -21,12 +21,16 @@ import { DocumentDashboardComponent } from './features/document-dashboard/docume
 import { AdminHomeComponent } from './features/admin-home/admin-home.component';
 import { OrgListComponent } from './admin/org-list/org-list.component';
 import { OrgDashboardComponent } from './admin/org-dashboard/org-dashboard.component';
+import { SettingsComponent } from './auth/settings/settings.component';
+import { VerifyDocComponent } from './features/verify-doc/verify-doc.component';
 
 const routes: Routes = [
   { path: '', component: NewSigninComponent },
   { path: 'workspace-table', component: DocWorkspaceTableComponent },
   { path: 'workspaces', component: DocWorkspaceListComponent },
   { path: 'orgs', component: OrgListComponent },
+  { path: 'settings', component: SettingsComponent, resolve: { data: DataResolver }},
+  { path: 'verify', component: VerifyDocComponent, resolve: { data: DataResolver }},
   { path: 'documents', component: DocDocumentTableComponent },
   { path: 'workspace-dashboard/:id', component: ProjectDashboardComponent, resolve: { data: DataResolver }  },
   { path: 'document-dashboard/:id', component: DocumentDashboardComponent, resolve: { data: DataResolver }  },
