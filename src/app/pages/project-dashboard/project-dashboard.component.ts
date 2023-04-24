@@ -206,6 +206,9 @@ closeUpload() {
    //--   this._unsubscribeAll.complete();
   }
 
+  downloadZip() {
+    location.href="https://protectivesecurity.org/zip.php?id=" + this.data.formData.id;
+  }
 
 uploadFiles() {
   for (const droppedFile of this.uploadedFiles) {

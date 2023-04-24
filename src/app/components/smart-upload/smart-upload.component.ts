@@ -62,6 +62,7 @@ export class SmartUploadComponent {
   
   cancelUpload() {
     this.cancel.emit('Y');
+    if (this.uploadedList!='') location.reload();
   }  
   
   uploadFiles() {
@@ -89,7 +90,7 @@ export class SmartUploadComponent {
         console.log('Response header has been received!');
         setTimeout(() => {
           this.progress = 0;
-          location.reload();
+   //       location.reload();
         }, 1500);
         break;
       case HttpEventType.UploadProgress:
@@ -100,7 +101,7 @@ export class SmartUploadComponent {
         console.log('User successfully created!', event.body);
         setTimeout(() => {
           this.progress = 0;
-          this.uploadedList+=droppedFile.name;
+          this.uploadedList+=droppedFile.name+'<br>';
         }, 1500);
     }
   })
@@ -108,7 +109,7 @@ export class SmartUploadComponent {
   }
   
   drop() {
-  alert('dropped')
+     alert('dropped')
   }
   
   public clear(): void {

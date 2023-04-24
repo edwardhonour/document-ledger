@@ -66,6 +66,7 @@ adding: any = 'N';
 version: any = 'N';
 sharing: any = 'N';
 emailing: any = 'N';
+inviting: any = 'N';
 
 k: any;
 uploadedList: any = '';
@@ -80,13 +81,23 @@ formData: any = {
   full_name: '',
   custom_msg: '',
   email: '',
-  default_role: '0'
+  default_role: '0',
+  share_url: ''
+}
+
+metaData: any = {
+  doc_id: 0,
+  doc_name: '',
+  doc_dsc: ''
 }
 
 ngOnInit(): void {      
         this._activatedRoute.data.subscribe(({ 
           data, menudata, userdata })=> { 
           this.data=data;
+          this.metaData.id=this.data.formData.id;
+          this.metaData.doc_dsc=this.data.formData.document_dsc;
+          this.metaData.doc_name=this.data.formData.document_name;
           if (this.data.user.force_logout>0) {
               localStorage.removeItem('uid');
               this._router.navigate(['/sign-in']);
@@ -123,6 +134,10 @@ toggleEmail() {
   }
 }
 
+closeInvite() {
+  this.inviting='N';
+}
+
 toggleAdd() {
   if (this.adding=='Y') {
     this.adding='N';
@@ -157,24 +172,35 @@ processClick(m: any) {
     this.uploading='Y';
     this.sharing='N';
     this.emailing='N';
+    this.inviting='N';
   }
   if (m.id=='EDIT') { 
     this.adding='Y'; 
     this.uploading='N';
     this.sharing='N';
     this.emailing='N';
+    this.inviting='N';
   }
   if (m.id=='SHARE') { 
     this.adding='N'; 
     this.uploading='N';
     this.sharing='Y';
     this.emailing='N';
+    this.inviting='N';
   }
   if (m.id=='EMAIL') { 
     this.adding='N'; 
     this.uploading='N';
-    this.sharing='Y';
+    this.sharing='N';
     this.emailing='Y';
+    this.inviting='N';
+  }
+  if (m.id=='TEAM') { 
+    this.adding='N'; 
+    this.uploading='N';
+    this.sharing='N';
+    this.emailing='N';
+    this.inviting='Y';
   }
 }
 
@@ -186,6 +212,10 @@ ngOnDestroy(): void
 
 previewVersion(m: any) {
 
+}
+
+downloadFile(version: any, m:any) {
+  location.href="https://protectivesecurity.org/down.php?id=" + m.storage_key + "&q=" + version;
 }
 
 uploadFiles() {
@@ -221,7 +251,7 @@ for (const droppedFile of this.uploadedFiles) {
 }
 
 drop() {
-alert('dropped')
+   alert('dropped')
 }
 
 public clear(): void {
@@ -238,6 +268,12 @@ sendInviteT() {
 sendLink() {
   this.formData.org_id = this.data.formData.id;
   this._dataService.postAuth("send-email-link", this.formData).subscribe((data:any)=>{
+    location.reload();  
+  });
+}
+
+postMeta() {
+  this._dataService.postForm("update-doc-metadata", this.metaData).subscribe((data:any)=>{
     location.reload();  
   });
 }

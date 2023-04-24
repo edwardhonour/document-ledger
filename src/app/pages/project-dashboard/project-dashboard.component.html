@@ -6,12 +6,13 @@
 <div style="margin-left: 30px; " class="card">
     <div class="container-fluid p-3">
         <div class="row card card-body m-3">
-            <div class="col-sm-12" style="background-color: white;">
+            <div class="col-8" style="background-color: white;">
                 <h1 class="mt-2"><span style="text-align: right; margin-right: 30px;"> <button [routerLink]="['/workspaces']" class="btn btn-secondary"><i class="bi bi-arrow-bar-left"></i></button></span>{{ data?.formData?.workspace_name }}</h1>
                 <p>{{ data?.formData?.workspace_dsc }}<br>
-                {{ data?.formData?.storage_key }}<br>
             </div>   
-
+            <div class="col-12" style="text-align: right;">
+                <button class="btn btn-danger" (click)="downloadZip()">Download Zip</button>
+            </div>
         </div>
         <div class="row p-3">
             <div class="col-3">
@@ -19,7 +20,6 @@
                     <h2>Main Menu</h2>
                     <sql-menu (menuClick)="processClick($event);" [active]="'DOCUMENTS'">
                         <li #row id="INVITE">Invite Collaborator</li>    
-                        <li #row id="DOCUMENTS">Documents</li> 
                         <li #row id="MANAGE">Manage Workspace</li>
                         <li #row id="ADD">New Document</li>
                         <li #row id="UPLOAD">Smart Upload</li>                    
@@ -210,7 +210,6 @@
             </div>
         </div>   
     </div>
-        
     </div>    
     <div class="relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
             <span class="font-medium text-secondary">SQLLabs Inc. &copy; 2023</span>

@@ -116,6 +116,21 @@ export class DataService {
 
   }
 
+  getFile(q: any, id: any) {
+  //  const data = {
+  //    "q" : q,
+  //    "id": id,
+  //  }
+    const data = {
+      "q" : 'download-file',
+      "id": 6,
+    }
+  console.log(data)
+  this.t= this.http.post("https://protectivesecurity.org/down.php", data);
+  return this.t;
+
+  }
+
   getVerticalMenu() {
     this.getLocalStorage()
     const data = {
