@@ -23,19 +23,24 @@ import { OrgListComponent } from './admin/org-list/org-list.component';
 import { OrgDashboardComponent } from './admin/org-dashboard/org-dashboard.component';
 import { SettingsComponent } from './auth/settings/settings.component';
 import { VerifyDocComponent } from './features/verify-doc/verify-doc.component';
+import { DocumentListComponent } from './features/documents/document-list/document-list.component';
+import { MyTeamListComponent } from './features/team/my-team-list/my-team-list.component';
+import { DocumentShareListComponent } from './features/documents/document-share-list/document-share-list.component';
+import { AdminOrgListComponent } from './features/organizations/admin-org-list/admin-org-list.component';
 
 const routes: Routes = [
   { path: '', component: NewSigninComponent },
   { path: 'workspace-table', component: DocWorkspaceTableComponent },
   { path: 'workspaces', component: DocWorkspaceListComponent },
-  { path: 'orgs', component: OrgListComponent },
+  { path: 'orgs', component: AdminOrgListComponent, resolve: { data: DataResolver }},
   { path: 'settings', component: SettingsComponent, resolve: { data: DataResolver }},
   { path: 'verify', component: VerifyDocComponent, resolve: { data: DataResolver }},
-  { path: 'documents', component: DocDocumentTableComponent },
+  { path: 'documents', component: DocumentListComponent, resolve: { data: DataResolver }  },
   { path: 'workspace-dashboard/:id', component: ProjectDashboardComponent, resolve: { data: DataResolver }  },
   { path: 'document-dashboard/:id', component: DocumentDashboardComponent, resolve: { data: DataResolver }  },
   { path: 'org-dashboard/:id', component: OrgDashboardComponent, resolve: { data: DataResolver }  },
-  { path: 'team', component: NuaUserTableComponent },
+  { path: 'team', component: MyTeamListComponent, resolve: { data: DataResolver }  },
+  { path: 'shares', component: DocumentShareListComponent, resolve: { data: DataResolver }  },
   { path: 'admin', component: AdminHomeComponent },
   { path: 'test/:id', component: TestPageComponent, resolve: { parameters: RouteParameterResolver } },
   { path: 'test/:id/:id2', component: TestPageComponent, resolve: { parameters: RouteParameterResolver } },

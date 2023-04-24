@@ -79,14 +79,18 @@ export class OrgDashboardComponent {
   inviteT: any = 'N';
   inviteC: any = 'N';
   formData: any = {
-    workspace_id: 0,
-    uid: 0
+    org_id: 0,
+    full_name: '',
+    custom_msg: '',
+    email: '',
+    default_role: '0'
   }
 
   ngOnInit(): void {      
           this._activatedRoute.data.subscribe(({ 
             data, menudata, userdata })=> { 
             this.data=data;
+            this.formData.org_id = this.data.id;
             if (this.data.user.force_logout>0) {
                 localStorage.removeItem('uid');
                 this._router.navigate(['/sign-in']);
@@ -149,8 +153,18 @@ export class OrgDashboardComponent {
   }
 
   processClick(m: any) {
+    if (m.id=='TEAM') { 
+      this.inviteT = 'Y';
+      this.inviteC = 'N';
+      this.adding = 'N'; 
+    }
+  }
 
-    if (m.id=='TEAM') { this.toggleAdd(); }
+  sendInviteT() {
+    this.formData.org_id = this.data.formData.id;
+    this._dataService.postAuth("invite-team-member", this.formData).subscribe((data:any)=>{
+      location.reload();  
+    });
   }
 
   ngOnDestroy(): void

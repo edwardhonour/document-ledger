@@ -90,6 +90,20 @@ export class DataService {
 
   }
 
+  postAuth(formID: any, formData: any[]) {
+    
+    this.getLocalStorage();
+    const data = {
+      "q" : formID,
+      "data": formData,
+      "uid": this.uid
+    }
+
+    this.t= this.http.post("https://protectivesecurity.org/api/auth.php", data);
+    return this.t;
+
+  }
+
   postLogin(username: any, password: any) {
     const data = {
       "q" : "login",
