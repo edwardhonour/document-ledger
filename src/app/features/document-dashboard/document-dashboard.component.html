@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-lg-4 col-xl-3 col-xxl-2 card">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
       <app-sitebar-wrapper></app-sitebar-wrapper>       
     </div>
 <div class="col-lg-8 col-xl-9 col-xxl-10">
@@ -24,22 +24,80 @@
                     <sql-menu (menuClick)="processClick($event);" [active]="'FD'">
                         <li #row id="EDIT">Edit Document Description</li>
                         <li #row id="UPLOAD">Upload New Version</li>                    
-                        <li #row id="SHARE">Share Document</li>
-                        <li #row id="EMAIL">Share Via Email</li>                     
-               </sql-menu>
-                </div>
-                <div class="card card-body">
-                    <sql-menu (menuClick)="processClick($event);">
-                        <li #row id="TEAM">Invite Team Member</li>                    
-                        <li #row id="TEAM">Invite Collaborator</li>                      
+                        <li #row id="SHARE">Share Document</li>            
+                        <li #row id="EMAIL">Email Link</li>             
+                        <li #row id="TEAM">Invite Collaborator</li>    
                </sql-menu>
                 </div>
             </div>
     
             <div class="col-sm-9">
                 <div *ngIf="uploading=='Y'" class="card p-3">
-                    <app-sql-upload [workspace_id]="data?.workspace?.id" document_id="data?.formData.id" (cancel)="toggleAdd()"></app-sql-upload>
-                </div>            
+                    <app-sql-upload [workspace_id]="data?.workspace?.id" document_id="data?.formData.id" (cancel)="toggleUpload()"></app-sql-upload>
+                </div>  
+                <div *ngIf="adding=='Y'" class="card p-3">
+                    <div class="card p-3">
+                        <div class="card-header">
+                            <h2>Edit Document Metadata</h2>
+                        </div>
+                        <div class="card-body">
+                              <div class="mb-3">
+                                <label for="exampleFormControlInput1" style="color: black" class="form-label">Document Name</label>
+                                <input [(ngModel)]="data?.formData.document_name" type="text" class="form-control" id="exampleFormControlInput1">
+                              </div>
+                              <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" style="color: black" class="form-label">Description</label>
+                                <textarea [(ngModel)]="data?.formData.document_dsc" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                              </div>
+                             <div class="mb-3">
+                                    <button (click)="sendLink()" class="btn btn-primary">Sav Changes</button>
+                                    <button style="margin-left: 20px;" (click)="toggleAdd()" class="btn btn-light">Cancel</button>
+                             </div>
+                        </div>
+                    </div>
+                </div>     
+                <div *ngIf="sharing=='Y'" class="card p-3">
+                    <div class="card p-3">
+                        <div class="card-header">
+                            <h2>Share Document</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                              <label for="exampleFormControlInput1" style="color: black" class="form-label">Share URL</label>
+                              <input [(ngModel)]="data?.formData.document_name" type="text" class="form-control" id="exampleFormControlInput1">
+                            </div>
+                           <div class="mb-3">
+                                  <button (click)="sendLink()" class="btn btn-primary">Save Changes</button>
+                                  <button style="margin-left: 20px;" (click)="toggleShare()" class="btn btn-light">Cancel</button>
+                           </div>
+                      </div>
+                    </div>
+                </div>   
+                <div *ngIf="emailing=='Y'" class="card p-3">
+                    <div class="card p-3">
+                        <div class="card-header">
+                            <h2>Email Document Link</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" style="color: black" class="form-label">Email address</label>
+                                <input [(ngModel)]="formData.email" type="email" class="form-control" id="exampleFormControlInput1">
+                              </div>
+                              <div class="mb-3">
+                                <label for="exampleFormControlInput1" style="color: black" class="form-label">First Name</label>
+                                <input [(ngModel)]="formData.full_name" type="text" class="form-control" id="exampleFormControlInput1">
+                              </div>
+                              <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" style="color: black" class="form-label">Custom Message</label>
+                                <textarea [(ngModel)]="formData.custom_msg" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                              </div>
+                             <div class="mb-3">
+                                    <button (click)="sendLink()" class="btn btn-primary">Send Link</button>
+                                    <button style="margin-left: 20px;" (click)="toggleEmail()" class="btn btn-light">Cancel</button>
+                             </div>
+                        </div>
+                    </div>
+                </div>                         
                 <div class="card p-3">
                     <div class="row">
                         <div class="col-9">
@@ -67,14 +125,7 @@
                                 <td><button [routerLink]="['/document-dashboard',m.storage_key]" class="btn btn-primary"><i class="bi bi-box-arrow-down"></i></button></td>
                             </tr>
                         </tbody>
-                    </table>
-                    <div class="row p-2">
-                        <div class="col-6">
-                        </div>
-                        <div class="col-6" style="text-align: right;">
-                            <button (click)="toggleAdd();" class="btn btn-secondary">Add Document</button>
-                        </div>
-                    </div>  
+                    </table> 
                 </div>
             </div>
         </div>   

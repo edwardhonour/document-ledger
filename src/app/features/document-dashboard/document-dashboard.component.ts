@@ -64,12 +64,24 @@ data: any;
 uploading: any = 'N';
 adding: any = 'N';
 version: any = 'N';
+sharing: any = 'N';
+emailing: any = 'N';
+
 k: any;
 uploadedList: any = '';
 public fileUploadControl = new FileUploadControl();
 progress: number = 0;
 uid: any = 0;
 doc_id: any = 0;
+share_name: any = '';
+
+formData: any = {
+  org_id: 0,
+  full_name: '',
+  custom_msg: '',
+  email: '',
+  default_role: '0'
+}
 
 ngOnInit(): void {      
         this._activatedRoute.data.subscribe(({ 
@@ -95,12 +107,36 @@ toggleUpload() {
   }
 }
 
+toggleShare() {
+  if (this.sharing=='Y') {
+    this.sharing='N';
+  } else {
+    this.sharing='Y';
+  }
+}
+
+toggleEmail() {
+  if (this.emailing=='Y') {
+    this.emailing='N';
+  } else {
+    this.emailing='Y';
+  }
+}
+
 toggleAdd() {
   if (this.adding=='Y') {
     this.adding='N';
   } else {
     this.adding='Y';
     this.uploading='N';
+  }
+}
+
+toggleInviteT() {
+  if (this.emailing=='Y') {
+    this.emailing='N';
+  } else {
+    this.emailing='Y';
   }
 }
 
@@ -116,7 +152,30 @@ toggleVersion(m: any) {
 
 processClick(m: any) {
 
-  if (m.id=='TEAM') { this.toggleAdd(); }
+  if (m.id=='UPLOAD') { 
+    this.adding='N'; 
+    this.uploading='Y';
+    this.sharing='N';
+    this.emailing='N';
+  }
+  if (m.id=='EDIT') { 
+    this.adding='Y'; 
+    this.uploading='N';
+    this.sharing='N';
+    this.emailing='N';
+  }
+  if (m.id=='SHARE') { 
+    this.adding='N'; 
+    this.uploading='N';
+    this.sharing='Y';
+    this.emailing='N';
+  }
+  if (m.id=='EMAIL') { 
+    this.adding='N'; 
+    this.uploading='N';
+    this.sharing='Y';
+    this.emailing='Y';
+  }
 }
 
 ngOnDestroy(): void
@@ -167,6 +226,20 @@ alert('dropped')
 
 public clear(): void {
 this.uploadedFiles = [];
+}
+
+sendInviteT() {
+  this.formData.org_id = this.data.formData.id;
+  this._dataService.postAuth("invite-team-member", this.formData).subscribe((data:any)=>{
+    location.reload();  
+  });
+}
+
+sendLink() {
+  this.formData.org_id = this.data.formData.id;
+  this._dataService.postAuth("send-email-link", this.formData).subscribe((data:any)=>{
+    location.reload();  
+  });
 }
 
 }

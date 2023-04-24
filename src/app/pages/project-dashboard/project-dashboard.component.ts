@@ -61,8 +61,15 @@ export class ProjectDashboardComponent {
 ) { }
   public uploadedFiles: Array<File> = [];
   data: any; 
+
+
+
   uploading: any = 'N';
   adding: any = 'N';
+  inviting: any = 'N';
+  sharing: any = 'N';
+  managing: any = 'N';
+
   version: any = 'N';
   k: any;
   uploadedList: any = '';
@@ -70,6 +77,14 @@ export class ProjectDashboardComponent {
   progress: number = 0;
   uid: any = 0;
   doc_id: any = 0;
+
+  formData: any = {
+    org_id: 0,
+    full_name: '',
+    custom_msg: '',
+    email: '',
+    default_role: '0'
+  }
 
   ngOnInit(): void {      
           this._activatedRoute.data.subscribe(({ 
@@ -104,6 +119,21 @@ export class ProjectDashboardComponent {
     }
   }
 
+  toggleInviteT() {
+    if (this.inviting=='Y') {
+      this.inviting='N';
+    } else {
+      this.inviting='Y';
+    }
+  }
+
+  sendInviteT() {
+    this.formData.org_id = this.data.formData.id;
+    this._dataService.postAuth("invite-team-member", this.formData).subscribe((data:any)=>{
+      location.reload();  
+    });
+  }
+
   toggleVersion(m: any) {
     this.k=m;
     this.doc_id=m.id;
@@ -115,8 +145,59 @@ export class ProjectDashboardComponent {
   }
 
   processClick(m: any) {
+    if (m.id=='DOCUMENTS') { 
+      this.adding='N';
+      this.uploading='N';
+      this.inviting='N';
+      this.sharing='N';
+      this.managing='N';
+    }
 
-    if (m.id=='TEAM') { this.toggleAdd(); }
+    if (m.id=='MANAGE') { 
+      this.adding='N';
+      this.uploading='N';
+      this.inviting='N';
+      this.sharing='N';
+      this.managing='Y';
+    }
+
+    if (m.id=='ADD') { 
+      this.adding='Y';
+      this.uploading='N';
+      this.inviting='N';
+      this.sharing='N';
+      this.managing='N';
+    }
+
+    if (m.id=='INVITE') { 
+      this.adding='N';
+      this.uploading='N';
+      this.inviting='Y';
+      this.sharing='N';
+      this.managing='N';
+    }
+
+    if (m.id=='UPLOAD') { 
+      this.adding='N';
+      this.uploading='Y';
+      this.inviting='N';
+      this.sharing='N';
+      this.managing='N';
+    }
+
+
+    if (m.id=='SHARING') { 
+      this.adding='N';
+      this.uploading='N';
+      this.inviting='N';
+      this.sharing='Y';
+      this.managing='N';
+    }
+
+  }
+
+  closeManage() {
+    this.managing='N';
   }
 
   ngOnDestroy(): void

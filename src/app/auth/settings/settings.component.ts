@@ -116,7 +116,7 @@ export class SettingsComponent {
   }
   
   processClick(m: any) {
-  
+
     if (m.id=='TEAM') { this.toggleAdd(); }
   }
   

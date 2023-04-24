@@ -6,7 +6,7 @@
 <div style="margin-left: 30px; " class="card">
     <div class="container-fluid p-3">
         <div class="row card card-body m-3">
-            <div class="col-sm-5" style="background-color: white;">
+            <div class="col-sm-12" style="background-color: white;">
                 <h1 class="mt-2"><span style="text-align: right; margin-right: 30px;"> <button [routerLink]="['/workspaces']" class="btn btn-secondary"><i class="bi bi-arrow-bar-left"></i></button></span>{{ data?.formData?.workspace_name }}</h1>
                 <p>{{ data?.formData?.workspace_dsc }}<br>
                 {{ data?.formData?.storage_key }}<br>
@@ -18,30 +18,153 @@
                 <div class="card card-body">
                     <h2>Main Menu</h2>
                     <sql-menu (menuClick)="processClick($event);" [active]="'DOCUMENTS'">
+                        <li #row id="INVITE">Invite Collaborator</li>    
                         <li #row id="DOCUMENTS">Documents</li> 
                         <li #row id="MANAGE">Manage Workspace</li>
                         <li #row id="ADD">New Document</li>
                         <li #row id="UPLOAD">Smart Upload</li>                    
-                        <li #row id="SHARE">Share Workspace</li>
-                        <li #row id="HIDE">Hide (Delete Workspace)</li>                         
-               </sql-menu>
-                </div>
-                <div class="card card-body">
-                    <sql-menu (menuClick)="processClick($event);">
-                        <li #row id="TEAM">Invite Team Member</li>                    
-                        <li #row id="TEAM">Invite Collaborator</li>      
-                        <li #row id="TEAM">Invite Stakeholder</li>                      
-               </sql-menu>
+                        <li #row id="SHARE">Share Workspace</li>              
+                    </sql-menu>
                 </div>
             </div>
     
             <div class="col-sm-9">
+                <!-- UPLOADNG -->
                 <div *ngIf="uploading=='Y'" class="card p-3">
                     <app-smart-upload [workspace_id]="data?.formData?.id" document_id="'0'" (cancel)="toggleAdd()"></app-smart-upload>
                 </div>
+                <!-- ADDING -->
                 <div *ngIf="adding=='Y'" class="card p-3">
                     <app-add-document-form (cancel)="toggleAdd()" [workspace_id]="data?.formData?.id" [user_id]="uid"></app-add-document-form>
-                </div>                
+                </div>   
+                <div *ngIf="inviting=='Y'" class="card p-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Invite Collaborator</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" style="color: black" class="form-label">Email address</label>
+                                <input [(ngModel)]="formData.email" type="email" class="form-control" id="exampleFormControlInput1">
+                              </div>
+                              <div class="mb-3">
+                                <label for="exampleFormControlInput1" style="color: black" class="form-label">Full Name</label>
+                                <input [(ngModel)]="formData.full_name" type="text" class="form-control" id="exampleFormControlInput1">
+                              </div>
+                              <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" style="color: black" class="form-label">Custom Message</label>
+                                <textarea [(ngModel)]="formData.custom_msg" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                              </div>
+                              <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" style="color: black" class="form-label">Default Role</label>
+                                <select [(ngModel)]="formData.default_role" class="form-select" aria-label="Default select example">
+                                    <option selected>-- Select --</option>
+                                    <option value="0">Read Only</option>
+                                    <option value="2">Read Write</option>
+                                    <option value="3">Full Control</option>
+                                    <option value="5">Upload Only</option>
+                                    <option value="7">Administrator</option>
+                                  </select>
+                             </div>
+                             <div class="mb-3">
+                                    <button (click)="sendInviteT()" class="btn btn-primary">Send Invitation</button>
+                                    <button style="margin-left: 20px;" (click)="toggleInviteT()" class="btn btn-light">Cancel</button>
+                             </div>
+                        </div>
+                    </div>
+                </div>                         
+                <!-- MANAGING -->
+                <div *ngIf="managing=='Y'" class="card p-3">
+                    <div class="card p-3">
+                        <div class="card-heading">
+                            <h2>Manage Workspace</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row p-2">
+                                <div class="col-9">
+                                    Administrator
+                                </div>
+                                <div class="col-3">
+                                    Edward Honour
+                                </div>
+                            </div>
+                            <div class="row p-2">
+                                    <div class="col-9">
+                                        Require 2FA for Uploads
+                                    </div>
+                                    <div class="col-3">
+                                        N
+                                    </div>
+                            </div> 
+                            <div class="row p-2">
+                                    <div class="col-9">
+                                        Only allow original author to replace documents
+                                    </div>
+                                    <div class="col-3">
+                                        N
+                                    </div>
+                            </div>
+                            <div class="row p-2">
+                                <div class="col-9">
+                                    Allow public validation of documents
+                                </div>
+                                <div class="col-3">
+                                    Y
+                                </div>
+                            </div>                               
+                            <div class="row p-2">
+                                <div class="col-9">
+                                    Max Document Size
+                                </div>
+                                <div class="col-3">
+                                    50M
+                                </div>
+                            </div>
+                           <div class="row p-2">
+                                    <div class="col-9"></div>
+                                    <div class="col-3">
+                                        <button class="btn btn-secondary">Edit</button>
+                                        <button style="margin-left: 20px;" (click)="closeManage()" class="btn btn-light">Close</button>
+                                    </div>
+                                </div>                                         
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="sharing=='Y'" class="card p-3">
+                    <div class="card p-3">
+                        <div class="card-heading">
+                            <h2>Create a Public ShareManage Workspace</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row p-2">
+                                <div class="col-9">
+                                    Public URL
+                                </div>
+                                <div class="col-3">
+                                    https://publicschoolnews.com/a7ffs
+                                </div>
+                            </div>     
+                            <div class="row p-2">
+                                <div class="col-9">
+                                    Allow Validation
+                                </div>
+                                <div class="col-3">
+                                    Y
+                                </div>
+                            </div>                                                              
+                            <div class="row p-2">
+                                <div class="col-9">
+                                    
+                                </div>
+                                <div class="col-3">
+                                    <button class="btn btn-secondary">Edit</button>
+                                    <button style="margin-left: 20px;" ;(click)="closeManage()" class="btn btn-light">Close</button>
+                                </div>
+                            </div>                                                        
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card p-3">
                     <div class="row">
                         <div class="col-9">
