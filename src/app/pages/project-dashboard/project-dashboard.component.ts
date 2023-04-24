@@ -106,16 +106,16 @@ export class ProjectDashboardComponent {
       this.uploading='N';
     } else {
       this.uploading='Y';
-      this.adding='N';
     }
   }
-
+closeUpload() {
+  this.uploading='N';
+}
   toggleAdd() {
     if (this.adding=='Y') {
       this.adding='N';
     } else {
       this.adding='Y';
-      this.uploading='N';
     }
   }
 

@@ -31,7 +31,7 @@
             <div class="col-sm-9">
                 <!-- UPLOADNG -->
                 <div *ngIf="uploading=='Y'" class="card p-3">
-                    <app-smart-upload [workspace_id]="data?.formData?.id" document_id="'0'" (cancel)="toggleAdd()"></app-smart-upload>
+                    <app-smart-upload [workspace_id]="data?.formData?.id" document_id="'0'" (cancel)="closeUpload()"></app-smart-upload>
                 </div>
                 <!-- ADDING -->
                 <div *ngIf="adding=='Y'" class="card p-3">
